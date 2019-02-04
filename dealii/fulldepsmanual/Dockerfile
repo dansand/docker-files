@@ -1,24 +1,35 @@
-FROM dealii/full-deps:fulldepsmanual
+#-#-#FROM dealii/full-deps:fulldepsmanual
+FROM alexisespinosa/dealii_full-deps:fulldepsmanual
 
-MAINTAINER luca.heltai@gmail.com
+#-#-#MAINTAINER luca.heltai@gmail.com
 
 # get deal.II repo
 ARG VER=master
 ARG BUILD_TYPE=Debug
+ARG SOFTDIR=/software
 
+WORKDIR $SOFTDIR
 RUN git clone https://github.com/dealii/dealii.git dealii-$VER-src && \
     cd dealii-$VER-src && \
     git checkout $VER && \
     mkdir build && cd build && \
     cmake -DDEAL_II_WITH_MPI=ON \
           -DDEAL_II_COMPONENT_EXAMPLES=OFF \
-          -DCMAKE_INSTALL_PREFIX=~/dealii-$VER \
+#::AEG:: Replacing the installation dir of the tools into $SOFTDIR instead of $HOME
+#-#-#          -DCMAKE_INSTALL_PREFIX=~/dealii-$VER \
+          -DCMAKE_INSTALL_PREFIX=$SOFTDIR/dealii-$VER \
           -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
 	  -GNinja \
           ../ && \
     ninja install && \
     ninja test && \
-    cp summary.log ~/dealii-$VER/summary.log && \
+#::AEG:: Replacing the installation dir of the tools into $SOFTDIR instead of $HOME
+#-#-#    cp summary.log ~/dealii-$VER/summary.log && \
+    cp summary.log $SOFTDIR/dealii-$VER/summary.log && \
     cd .. && rm -rf build .git
 
-ENV DEAL_II_DIR ~/dealii-$VER
+#::AEG:: Replacing the installation dir of the tools into $SOFTDIR instead of $HOME
+#-#-#ENV DEAL_II_DIR ~/dealii-$VER
+ENV DEAL_II_DIR $SOFTDIR/dealii-$VER
+
+WORKDIR $HOME
