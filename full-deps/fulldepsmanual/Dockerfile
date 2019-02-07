@@ -1,5 +1,5 @@
 #-#-#FROM dealii/base:gcc-mpi
-FROM alexisespinosa/dealii_base:gcc-mpi
+FROM dansand/dealii_base:gcc-mpi
 
 #-#-#MAINTAINER luca.heltai@gmail.com
 # based on work by Rene Gassmoeller and Timo Heister
@@ -24,10 +24,10 @@ USER $USER
 ENV SOFTDIR /software
 
 #Build p4est
-ENV P4EST_VERSION 1.1
-#::AEG::Consider the use of the latest version listed in: 
+#ENV P4EST_VERSION 1.1
+#::AEG::Consider the use of the latest version listed in:
 #       https://github.com/cburstedde/p4est/releases
-#ENV P4EST_VERSION 2.0
+ENV P4EST_VERSION 2.0
 
 WORKDIR $SOFTDIR
 RUN wget http://p4est.github.io/release/p4est-$P4EST_VERSION.tar.gz && \
@@ -38,8 +38,8 @@ RUN wget http://p4est.github.io/release/p4est-$P4EST_VERSION.tar.gz && \
     ./p4est-setup.sh p4est-$P4EST_VERSION.tar.gz $SOFTDIR/libs/p4est-$P4EST_VERSION && \
     rm -rf p4est-build p4est-$P4EST_VERSION p4est-setup.sh p4est-$P4EST_VERSION.tar.gz
 #::AEG:: Replacing the installation dir of the tools into $SOFTDIR instead of $HOME
-#-#-#ENV P4EST_DIR $HOME/libs/p4est-$P4EST_VERSION 
-ENV P4EST_DIR $SOFTDIR/libs/p4est-$P4EST_VERSION 
+#-#-#ENV P4EST_DIR $HOME/libs/p4est-$P4EST_VERSION
+ENV P4EST_DIR $SOFTDIR/libs/p4est-$P4EST_VERSION
 
 #::::::::::::::::::::::::::::::::::::::::::
 #::AEG:: The replacement of "~" or "/home/dealii" or "$HOME" with "$SOFTDIR" or "/software"
@@ -50,7 +50,7 @@ ENV P4EST_DIR $SOFTDIR/libs/p4est-$P4EST_VERSION
 
 #Build HDF5
 ENV HDF5_VERSION 1.10.0-patch1
-#::AEG::Consider the use of the latest version listed in: 
+#::AEG::Consider the use of the latest version listed in:
 #       https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/
 #       or
 #       https://support.hdfgroup.org/ftp/HDF5/current/src/
@@ -65,14 +65,14 @@ RUN wget http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$HDF5_VERSION/
     ./configure --enable-parallel \
                 --enable-shared \
                 --prefix=$SOFTDIR/libs/hdf5-$HDF5_VERSION/ && \
-    make -j2 && make install && \
+    make -j1 && make install && \
     cd $SOFTDIR && \
-    rm -rf hdf5-$HDF5_VERSION hdf5-$HDF5_VERSION.tar.bz2 
+    rm -rf hdf5-$HDF5_VERSION hdf5-$HDF5_VERSION.tar.bz2
 ENV HDF5_DIR $SOFTDIR/libs/hdf5-$HDF5_VERSION
 
 #Build Trilinos
 ENV TRILINOS_VERSION 12-8-1
-#::AEG::Consider the use of the latest version listed in: 
+#::AEG::Consider the use of the latest version listed in:
 #       https://github.com/trilinos/Trilinos/releases
 #ENV TRILINOS_VERSION 12-12-1
 
@@ -121,7 +121,7 @@ RUN wget https://github.com/trilinos/Trilinos/archive/trilinos-release-$TRILINOS
      -D Trilinos_EXTRA_LINK_FLAGS="-lgfortran" \
      -D Trilinos_VERBOSE_CONFIGURE=FALSE \
      .. && \
-   make -j4 && make install && \
+   make -j1 && make install && \
    cd $SOFTDIR && \
    rm -rf Trilinos-trilinos-release-* &&\
    rm -rf trilinos-release-*
@@ -129,7 +129,7 @@ ENV TRILINOS_DIR $SOFTDIR/libs/trilinos-$TRILINOS_VERSION
 
 #petsc
 ENV PETSC_VERSION 3.7.4
-#::AEG::Consider the use of the latest version listed in: 
+#::AEG::Consider the use of the latest version listed in:
 #       http://ftp.mcs.anl.gov/pub/petsc/release-snapshots
 #ENV PETSC_VERSION 3.10.3
 
@@ -167,7 +167,7 @@ ENV MUMPS_DIR $PETSC_DIR
 
 #slepc
 ENV SLEPC_VERSION 3.7.3
-#::AEG::Consider the use of the latest version listed in: 
+#::AEG::Consider the use of the latest version listed in:
 #       http://slepc.upv.es/download/
 #ENV SLEPC_VERSION 3.10.1
 
@@ -182,11 +182,11 @@ RUN wget http://slepc.upv.es/download/distrib/slepc-$SLEPC_VERSION.tar.gz \
     make SLEPC_DIR=`pwd` && make SLEPC_DIR=`pwd` install && \
     cd $SOFTDIR && rm -rf slepc-$SLEPC_VERSION*
 
-ENV SLEPC_DIR $SOFTDIR/libs/slepc-$SLEPC_VERSION    
+ENV SLEPC_DIR $SOFTDIR/libs/slepc-$SLEPC_VERSION
 
 #oce
 ENV OCE_VERSION 0.17.2
-#::AEG::Consider the use of the latest version listed in: 
+#::AEG::Consider the use of the latest version listed in:
 #       https://github.com/tpaviot/oce/releases
 #ENV OCE_VERSION 0.18.3
 
@@ -212,7 +212,7 @@ RUN \
     -DOCE_WITH_GL2PS:BOOL=OFF \
     -DOCE_WITH_OPENCL:BOOL=OFF \
     .. && \
-    make -j4 && make install && \
+    make -j1 && make install && \
     cd ../.. && rm -rf oce-*
 
 ENV OPENCASCADE_DIR $SOFTDIR/libs/oce-$OCE_VERSION
@@ -220,7 +220,7 @@ ENV OCE_DIR $SOFTDIR/libs/oce-$OCE_VERSION
 
 # Arpack
 ENV ARPACK_VERSION 3.4.0
-#::AEG::Consider the use of the latest version listed in: 
+#::AEG::Consider the use of the latest version listed in:
 #       https://github.com/opencollab/arpack-ng/releases
 #ENV ARPACK_VERSION 3.7.0
 
@@ -238,8 +238,8 @@ RUN \
     tar xf $ARPACK_VERSION.tar.gz && rm -f $ARPACK_VERSION.tar.gz &&\
     cd arpack-ng-$ARPACK_VERSION && \
     ./bootstrap && ./configure --prefix=$SOFTDIR/libs/arpack-$ARPACK_VERSION --enable-mpi &&\
-    make -j4 install &&\
-    cd .. && rm -rf arpack-ng-* 
+    make -j1 install &&\
+    cd .. && rm -rf arpack-ng-*
 
 ENV ARPACK_DIR $SOFTDIR/libs/arpack-$ARPACK_VERSION
 

@@ -1,5 +1,5 @@
 #-#-#FROM dealii/full-deps:fulldepsmanual
-FROM alexisespinosa/dealii_full-deps:fulldepsmanual
+FROM dansand/dealii_full-deps:fulldepsmanual
 
 #-#-#MAINTAINER luca.heltai@gmail.com
 
