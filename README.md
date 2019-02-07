@@ -18,14 +18,12 @@ docker build -t dansand/dealii_full-deps:fulldepsmanual .
 ```
 (This one is the one you want to modify/adapt in order to use the right versions of the tools needed. At least you should modify the part for the P4EST to use the latest version (2.0).
 
------
-
 at docker-files/dealii/fulldepsmanual
 ```
 docker build -t dansand/dealii:v9.1.0-pre-gcc-mpichpawsey-fulldepsmanual .
 ```
 
-
+---
 
 
 
