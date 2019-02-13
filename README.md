@@ -23,14 +23,12 @@ at docker-files/full-deps/fulldepsmanual
 ```
 docker build -t dansand/dealii_full-deps:fulldepsmanual .
 ```
-
-
+^This is the one you want to modify in order to use the update versions of the Aspect dependecies (P4EST, etc.)
 
 at docker-files/dealii/fulldepsmanual
 ```
 docker build -t dansand/dealii:v9.1.0-pre-gcc-mpichpawsey-fulldepsmanual .
 ```
-This is the one you want to modify in order to use the update versions of the Aspect dependecies (P4EST, etc.)
 
 
 ---
