@@ -1,8 +1,8 @@
 # deal.II Docker images based on MPICH for shifter
 
-This repository contains Dockerfiles that have been modified to build dealii and its dependencies using MPICH. This was done so that the images could be used to run ASPECT via shifter on HPC systems (specifically PAWSEY/Magnus).
+This repository contains Dockerfiles that have been modified to build dealii and its dependencies using MPICH. This was done so that the images could be used to run [ASPECT](https://aspect.geodynamics.org/)  via [shifter](https://github.com/NERSC/shifter) on HPC systems (specifically PAWSEY/Magnus).
 
-More information is availble here: https://support.pawsey.org.au/documentation/display/US/Containers. Alexis Espinosa from PAWSEY carried out most of this work. Ongoing updates to these Dockerfiles will be posted here.
+More information is available here: https://support.pawsey.org.au/documentation/display/US/Containers. Alexis Espinosa from PAWSEY carried out most of this work. Ongoing updates to these Dockerfiles will be posted here.
 
 You can download the MPICH based Dealii image using docker/shifter (and swapping out dansand for your profile):
 
