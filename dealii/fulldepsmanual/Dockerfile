@@ -5,7 +5,7 @@ FROM dansand/dealii_full-deps:fulldepsmanual
 
 # get deal.II repo
 ARG VER=master
-ARG BUILD_TYPE=Debug
+ARG BUILD_TYPE=Release
 ARG SOFTDIR=/software
 
 WORKDIR $SOFTDIR
