@@ -65,7 +65,7 @@ RUN wget http://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-$HDF5_VERSION/
     ./configure --enable-parallel \
                 --enable-shared \
                 --prefix=$SOFTDIR/libs/hdf5-$HDF5_VERSION/ && \
-    make -j1 && make install && \
+    make -j2 && make install && \
     cd $SOFTDIR && \
     rm -rf hdf5-$HDF5_VERSION hdf5-$HDF5_VERSION.tar.bz2
 ENV HDF5_DIR $SOFTDIR/libs/hdf5-$HDF5_VERSION
@@ -121,7 +121,7 @@ RUN wget https://github.com/trilinos/Trilinos/archive/trilinos-release-$TRILINOS
      -D Trilinos_EXTRA_LINK_FLAGS="-lgfortran" \
      -D Trilinos_VERBOSE_CONFIGURE=FALSE \
      .. && \
-   make -j1 && make install && \
+   make -j4 && make install && \
    cd $SOFTDIR && \
    rm -rf Trilinos-trilinos-release-* &&\
    rm -rf trilinos-release-*
@@ -212,7 +212,7 @@ RUN \
     -DOCE_WITH_GL2PS:BOOL=OFF \
     -DOCE_WITH_OPENCL:BOOL=OFF \
     .. && \
-    make -j1 && make install && \
+    make -j4 && make install && \
     cd ../.. && rm -rf oce-*
 
 ENV OPENCASCADE_DIR $SOFTDIR/libs/oce-$OCE_VERSION
@@ -238,7 +238,7 @@ RUN \
     tar xf $ARPACK_VERSION.tar.gz && rm -f $ARPACK_VERSION.tar.gz &&\
     cd arpack-ng-$ARPACK_VERSION && \
     ./bootstrap && ./configure --prefix=$SOFTDIR/libs/arpack-$ARPACK_VERSION --enable-mpi &&\
-    make -j1 install &&\
+    make -j4 install &&\
     cd .. && rm -rf arpack-ng-*
 
 ENV ARPACK_DIR $SOFTDIR/libs/arpack-$ARPACK_VERSION

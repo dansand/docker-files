@@ -1,9 +1,16 @@
-# Docker files to create Docker images with deal.II  
+# deal.II Docker images based on MPICH for shifter
 
-[![Build Status](https://travis-ci.org/dealii/docker-files.svg?branch=master)](https://travis-ci.org/dealii/docker-files)
+This repository contains Dockerfiles that have been modified to build dealii and its dependencies using MPICH. This was done so that the images could be used to run [ASPECT](https://aspect.geodynamics.org/)  via [shifter](https://github.com/NERSC/shifter) on HPC systems (specifically PAWSEY/Magnus).
 
+More information is available here: https://support.pawsey.org.au/documentation/display/US/Containers. Alexis Espinosa from PAWSEY carried out most of this work. Ongoing updates to these Dockerfiles will be posted here.
 
-to build Dealii image, with mpich (from Alexis Espinosa)
+You can download the MPICH based Dealii image using docker/shifter (and swapping out dansand for your profile):
+
+`docker/shifter pull dansand/dealii:v9.1.0-pre-gcc-mpichpawsey-fulldepsmanual`
+
+(check https://hub.docker.com/r/dansand/dealii/tags to verify that the tagname is still valid )
+
+To build the MPICH-based Dealii image yourself, follow these instructions:
 
 at docker-files/base/gcc-mpi:
 
@@ -16,12 +23,13 @@ at docker-files/full-deps/fulldepsmanual
 ```
 docker build -t dansand/dealii_full-deps:fulldepsmanual .
 ```
-(This one is the one you want to modify/adapt in order to use the right versions of the tools needed. At least you should modify the part for the P4EST to use the latest version (2.0).
+^This is the one you want to modify in order to use the update versions of the Aspect dependecies (P4EST, etc.)
 
 at docker-files/dealii/fulldepsmanual
 ```
 docker build -t dansand/dealii:v9.1.0-pre-gcc-mpichpawsey-fulldepsmanual .
 ```
+
 
 ---
 
