@@ -4,7 +4,7 @@ FROM dansand/dealii_full-deps:fulldepsmanual
 #-#-#MAINTAINER luca.heltai@gmail.com
 
 # get deal.II repo
-ARG VER=master
+ARG VER=dealii-9.1
 ARG BUILD_TYPE=Release
 ARG SOFTDIR=/software
 
